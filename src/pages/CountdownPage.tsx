@@ -36,17 +36,111 @@ const CountdownPage = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [emailSent, setEmailSent] = useState<boolean>(false);
 
+    // For email confirmation
+    const emailConfirmTemp = `<head>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* General email styles */
+        body {
+            background-color: #8492a6;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            text-align: center;
+            /* Center-align text */
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            /* Center the email on the page */
+            background-color: #800000;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        h3 {
+            color: #fff;
+        }
+
+        p {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        .buttonConfirm {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e98c31;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .buttonConfirm:hover {
+            background-color: #B56D25;
+        }
+
+        /* Responsive design for mobile */
+        @media (max-width: 600px) {
+            .email-container {
+                width: 100%;
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            a {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-container">
+        <h3>This is a notification</h2>
+        <h2>❤️❤️❤️ Hi Love! ❤️❤️❤️</h2>
+        <p>You will be notified in this email once the countdown is about to end! Love you!</p>
+    </div>
+
+</body>`
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: { email: "" },
     })
 
-    const sendEmail = async (email: any) => {
+    const sendEmail = async (email: any, template: any) => {
         try {
             const response = await fetch('/api/send-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
+                body: JSON.stringify({ email, template })
             });
             const data = await response.json();
             console.log(data);
@@ -61,7 +155,7 @@ const CountdownPage = () => {
         setShowLoader(true)
         try {
             console.log(values)
-            const res = await sendEmail(values.email)
+            const res = await sendEmail(values.email, emailConfirmTemp)
             if (res.data) {
                 localStorage.setItem('emailSent', 'true')
                 setEmailSent(true)  // Hide Notify Me button
