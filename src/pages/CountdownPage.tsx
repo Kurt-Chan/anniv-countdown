@@ -158,6 +158,7 @@ const CountdownPage = () => {
             const res = await sendEmail(values.email, emailConfirmTemp)
             if (res.data) {
                 localStorage.setItem('emailSent', 'true')
+                localStorage.setItem('emailAdd', values.email)
                 setEmailSent(true)  // Hide Notify Me button
                 setMessage(
                     <p className='text-lg text-center font-medium text-white'>
@@ -195,6 +196,12 @@ const CountdownPage = () => {
             navigate('/wait');
         } else {
             navigate('/');
+        }
+
+        const anniv = localStorage.getItem('anniv')
+
+        if (anniv === 'true') {
+            navigate('/happy-anniversary')
         }
     }, [navigate]);
 

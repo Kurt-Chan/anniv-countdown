@@ -12,17 +12,128 @@ const DAY = HOUR * 24;
 
 type Units = "Day" | "Hour" | "Minute" | "Second";
 
+// For email confirmation
+const emailDoneTemp = `<head>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* General email styles */
+        body {
+            background-color: #8492a6;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            text-align: center;
+            /* Center-align text */
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            /* Center the email on the page */
+            background-color: #800000;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        h3 {
+            color: #fff;
+        }
+
+        p {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        .buttonConfirm {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e98c31;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .buttonConfirm:hover {
+            background-color: #B56D25;
+        }
+
+        /* Responsive design for mobile */
+        @media (max-width: 600px) {
+            .email-container {
+                width: 100%;
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            a {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-container">
+        <h3>It's finally here!</h2>
+        <h2>❤️❤️❤️ Hi Love! ❤️❤️❤️</h2>
+        <p>Only a minute left! Visit the this <a href='https://kurtchan.com' target='__blank'>link now</a>!</p>
+    </div>
+
+</body>`
+
+
+// Function to send the email notification
+const sendEmailNotification = async (email: any, template: any) => {
+    try {
+        const response = await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, template })
+        });
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error('Error sending email:', error);
+        return error;
+    }
+};
+
 const CountdownItem = ({ unit, text }: { unit: Units; text: string }) => {
     // NOTE: Framer motion exit animations can be a bit buggy when repeating
     // keys and tabbing between windows. Instead of using them, we've opted here
     // to build our own custom hook for handling the entrance and exit animations
     const useTimer = (unit: Units) => {
-        // Initialize navigate
-        const navigate = useNavigate();
         const [ref, animate] = useAnimate();
 
         const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
         const timeRef = useRef(0);
+        const emailSentRef = useRef(false); // Track if email has been sent
 
         const [time, setTime] = useState(0);
 
@@ -41,8 +152,15 @@ const CountdownItem = ({ unit, text }: { unit: Units; text: string }) => {
             if (distance <= 0) {
                 clearInterval(intervalRef.current || undefined);
                 localStorage.setItem('anniv', 'true')
-                navigate("/happy-anniversary"); // Replace with your target route
+                window.location.reload()
                 return;
+            }
+
+            if (distance <= MINUTE && !emailSentRef.current) {
+                emailSentRef.current = true; // Set to true to prevent resending
+                const emailAdd = localStorage.getItem('emailAdd'); // Get the email address
+                await sendEmailNotification(emailAdd, emailDoneTemp); // Send email when 1 min is left
+                // console.log("Email sent notification");
             }
 
             let newTime = 0;
