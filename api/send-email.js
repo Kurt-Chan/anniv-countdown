@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(import.meta.env.VITE_API_RESEND);
+const resend = new Resend(process.env.VITE_API_RESEND);
 
 export default async (req, res) => {
     if (req.method !== 'POST') {

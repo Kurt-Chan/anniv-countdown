@@ -24,29 +24,26 @@ import { useForm } from "react-hook-form"
 import { HeartSpinner } from 'react-spinners-kit';
 import { Button } from '@/components/ui/button';
 
-
 const formSchema = z.object({
-    email: z.string().email({
-        message: "Invalid email",
-    }),
+    email: z.string().email({ message: "Invalid email" }),
 })
-
 
 const CountdownPage = () => {
     const navigate = useNavigate();
     const [error, setError] = useState<JSX.Element | null>(null)
+    const [message, setMessage] = useState<JSX.Element | null>(null)
     const [showLoader, setShowLoader] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [emailSent, setEmailSent] = useState<boolean>(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
-            email: "",
-        },
+        defaultValues: { email: "" },
     })
 
     const sendEmail = async (email: any) => {
         try {
-            const response = await fetch('/api/SendEmail', {
+            const response = await fetch('/api/send-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
@@ -64,28 +61,48 @@ const CountdownPage = () => {
         setShowLoader(true)
         try {
             console.log(values)
-            sendEmail(values.email)
-
+            const res = await sendEmail(values.email)
+            if (res.data) {
+                localStorage.setItem('emailSent', 'true')
+                setEmailSent(true)  // Hide Notify Me button
+                setMessage(
+                    <p className='text-lg text-center font-medium text-white'>
+                        Email sent, My love! You will be notified soon!❤️
+                    </p>
+                )
+                console.log('Email Sent! You will be notified soon!')
+            } else {
+                setMessage(null)
+                setError(
+                    <p className='text-sm text-center font-medium text-red-500' >
+                        Sorry, Something went wrong😔
+                    </p>
+                )
+                setTimeout(() => setError(null), 8000);
+                throw res.error
+            }
         } catch (error) {
             console.error(error)
-        }
-        finally {
+        } finally {
             form.reset()
             setShowLoader(false)
-            setError(null)
+            setOpenDialog(false)
         }
     }
 
-
     useEffect(() => {
+        const sentEmail = localStorage.getItem('emailSent') === 'true';
+        if (sentEmail) {
+            setEmailSent(true);
+        }
+
         const herName = localStorage.getItem('HerName');
         if (herName === "chanel" || herName === "kaye" || herName === "chanel cao-wat" || herName === "kaye chanel") {
-            navigate('/wait')
+            navigate('/wait');
+        } else {
+            navigate('/');
         }
-        else {
-            navigate('/')
-        }
-    }, [])
+    }, [navigate]);
 
     return (
         <section className="h-screen flex flex-col justify-center items-center bg-gradient-to-t from-rose-900 via-pink-800 to-rose-900">
@@ -97,45 +114,48 @@ const CountdownPage = () => {
                 <CountdownItem unit="Minute" text="Minutes" />
                 <CountdownItem unit="Second" text="Seconds" />
             </div>
-            <Dialog>
-                <DialogTrigger className='px-4 py-3 bg-rose-950 hover:bg-pink-900 hover:scale-110 border-2 border-pink-200 font-body rounded-xl text-white text-xl my-4 flex justify-center items-center gap-2'>
-                    <span className='flex justify-center items-center gap-2'>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
-                            <path d="M5.85 3.5a.75.75 0 0 0-1.117-1 9.719 9.719 0 0 0-2.348 4.876.75.75 0 0 0 1.479.248A8.219 8.219 0 0 1 5.85 3.5ZM19.267 2.5a.75.75 0 1 0-1.118 1 8.22 8.22 0 0 1 1.987 4.124.75.75 0 0 0 1.48-.248A9.72 9.72 0 0 0 19.266 2.5Z" />
-                            <path fillRule="evenodd" d="M12 2.25A6.75 6.75 0 0 0 5.25 9v.75a8.217 8.217 0 0 1-2.119 5.52.75.75 0 0 0 .298 1.206c1.544.57 3.16.99 4.831 1.243a3.75 3.75 0 1 0 7.48 0 24.583 24.583 0 0 0 4.83-1.244.75.75 0 0 0 .298-1.205 8.217 8.217 0 0 1-2.118-5.52V9A6.75 6.75 0 0 0 12 2.25ZM9.75 18c0-.034 0-.067.002-.1a25.05 25.05 0 0 0 4.496 0l.002.1a2.25 2.25 0 1 1-4.5 0Z" clipRule="evenodd" />
-                        </svg>
-                        Notify me
-                    </span>
-                </DialogTrigger>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle >I need your email</DialogTitle>
-                        <DialogDescription>
-                            Enter your email and it will send you a notification when the countdown timer is about to run out.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Email address</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="youremail@email.com" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            {error}
-                            <HeartSpinner color="#FF0000" loading={showLoader} />
-                            {!showLoader && (<Button type="submit" disabled={!form.formState.isDirty || !form.formState.isValid}>Submit</Button>)}
-                        </form>
-                    </Form>
-                </DialogContent>
-            </Dialog>
+            {!emailSent ? (
+                <Dialog open={openDialog} onOpenChange={() => setOpenDialog(!openDialog)}>
+                    <DialogTrigger className='px-4 py-3 bg-rose-950 hover:bg-pink-900 hover:scale-110 border-2 border-pink-200 font-body rounded-xl text-white text-xl my-4 flex justify-center items-center gap-2'>
+                        <span className='flex justify-center items-center gap-2'>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                                <path d="M5.85 3.5a.75.75 0 0 0-1.117-1 9.719 9.719 0 0 0-2.348 4.876.75.75 0 0 0 1.479.248A8.219 8.219 0 0 1 5.85 3.5ZM19.267 2.5a.75.75 0 1 0-1.118 1 8.22 8.22 0 0 1 1.987 4.124.75.75 0 0 0 1.48-.248A9.72 9.72 0 0 0 19.266 2.5Z" />
+                                <path fillRule="evenodd" d="M12 2.25A6.75 6.75 0 0 0 5.25 9v.75a8.217 8.217 0 0 1-2.119 5.52.75.75 0 0 0 .298 1.206c1.544.57 3.16.99 4.831 1.243a3.75 3.75 0 1 0 7.48 0 24.583 24.583 0 0 0 4.83-1.244.75.75 0 0 0 .298-1.205 8.217 8.217 0 0 1-2.118-5.52V9A6.75 6.75 0 0 0 12 2.25ZM9.75 18c0-.034 0-.067.002-.1a25.05 25.05 0 0 0 4.496 0l.002.1a2.25 2.25 0 1 1-4.5 0Z" clipRule="evenodd" />
+                            </svg>
+                            Notify me
+                        </span>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>I need your email</DialogTitle>
+                            <DialogDescription>
+                                Enter your email and it will send you a notification when the countdown timer is about to run out.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Email address</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="youremail@email.com" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                {error}
+                                <HeartSpinner color="#FF0000" loading={showLoader} />
+                                {!showLoader && (<Button type="submit" disabled={!form.formState.isDirty || !form.formState.isValid}>Submit</Button>)}
+                            </form>
+                        </Form>
+                    </DialogContent>
+                </Dialog>
+            ) : (<>{message}</>)}
+
             <h1 className='text-md mt-5 font-light text-slate-300'>Prepared by Kurt 😉😘</h1>
         </section>
     )
