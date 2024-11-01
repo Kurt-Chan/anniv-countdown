@@ -108,7 +108,7 @@ const CountdownPage = () => {
         <section className="h-screen flex flex-col justify-center items-center bg-gradient-to-t from-rose-900 via-pink-800 to-rose-900">
             <h1 className='text-3xl md:text-6xl font-bold text-white mb-4'>Hi Love! My bad 😅</h1>
             <h1 className='text-lg md:text-2xl font-medium text-white'>Come back after</h1>
-            <div className="shadow-xl my-4 rounded-xl border-4 md:border-8 py-5 border-black flex w-80 md:w-full max-w-5xl items-center bg-white">
+            <div className="shadow-xl my-2 md:my-4 rounded-xl border-4 md:border-8 py-2 md:py-5 border-black flex w-80 md:w-full max-w-5xl items-center bg-white">
                 <CountdownItem unit="Day" text="Days" />
                 <CountdownItem unit="Hour" text="Hours" />
                 <CountdownItem unit="Minute" text="Minutes" />
