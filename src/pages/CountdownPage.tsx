@@ -23,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { HeartSpinner } from 'react-spinners-kit';
 import { Button } from '@/components/ui/button';
-import sendEmail from '@/api/SendEmail';
+
 
 const formSchema = z.object({
     email: z.string().email({
@@ -44,11 +44,26 @@ const CountdownPage = () => {
         },
     })
 
+    const sendEmail = async (email: any) => {
+        try {
+            const response = await fetch('/api/SendEmail', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.error('Error sending email:', error);
+            return error;
+        }
+    };
+
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setShowLoader(true)
         try {
             console.log(values)
-
             sendEmail(values.email)
 
         } catch (error) {
