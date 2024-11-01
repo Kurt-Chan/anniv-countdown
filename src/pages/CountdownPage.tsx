@@ -13,7 +13,6 @@ import { z } from "zod"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -24,6 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { HeartSpinner } from 'react-spinners-kit';
 import { Button } from '@/components/ui/button';
+import sendEmail from '@/api/SendEmail';
 
 const formSchema = z.object({
     email: z.string().email({
@@ -49,12 +49,15 @@ const CountdownPage = () => {
         try {
             console.log(values)
 
+            sendEmail(values.email)
+
         } catch (error) {
             console.error(error)
         }
         finally {
             form.reset()
             setShowLoader(false)
+            setError(null)
         }
     }
 
@@ -71,7 +74,7 @@ const CountdownPage = () => {
 
     return (
         <section className="h-screen flex flex-col justify-center items-center bg-gradient-to-t from-rose-900 via-pink-800 to-rose-900">
-            <h1 className='text-3xl md:text-6xl font-bold text-white mb-4'>Oops! My bad 😅</h1>
+            <h1 className='text-3xl md:text-6xl font-bold text-white mb-4'>Hi Love! My bad 😅</h1>
             <h1 className='text-lg md:text-2xl font-medium text-white'>Come back after</h1>
             <div className="shadow-xl my-4 rounded-xl border-4 md:border-8 py-5 border-black flex w-80 md:w-full max-w-5xl items-center bg-white">
                 <CountdownItem unit="Day" text="Days" />
