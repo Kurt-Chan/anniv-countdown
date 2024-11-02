@@ -51,14 +51,14 @@ const AnnivPage = () => {
     useEffect(() => {
         console.log(now)
 
-        // if (now != "11/18/2024") {
-        //     navigate('/wait')
-        // }
-        // else {
-        preloadImages(imageUrls)
-            .then(() => setImagesLoaded(true))
-            .catch((error) => console.error("Error preloading images:", error));
-        // }
+        if (now != "11/2/2024") {
+            navigate('/wait')
+        }
+        else {
+            preloadImages(imageUrls)
+                .then(() => setImagesLoaded(true))
+                .catch((error) => console.error("Error preloading images:", error));
+        }
     }, []);
 
     if (!imagesLoaded) {
@@ -71,7 +71,7 @@ const AnnivPage = () => {
 
     return (
         <MouseImageTrail
-            renderImageBuffer={100}
+            renderImageBuffer={60}
             rotationRange={25}
             images={imageUrls}
         >
