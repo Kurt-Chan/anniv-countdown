@@ -3,6 +3,7 @@ import MouseImageTrail from "@/components/MouseImageTrail";
 // import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { HeartSpinner } from "react-spinners-kit";
 
 
 
@@ -51,7 +52,7 @@ const AnnivPage = () => {
     useEffect(() => {
         console.log(now)
 
-        if (now != "11/2/2024") {
+        if (now != "11/2/2024") { // must change to 11/18/2024 and change to date today
             navigate('/wait')
         }
         else {
@@ -63,7 +64,8 @@ const AnnivPage = () => {
 
     if (!imagesLoaded) {
         return (
-            <div className="grid h-screen w-full place-content-center bg-white">
+            <div className="grid place-items-center h-screen w-full place-content-center bg-white">
+                <HeartSpinner color="#FF0000" />
                 <p>Loading images...</p>
             </div>
         );
@@ -85,65 +87,6 @@ const AnnivPage = () => {
             </section>
         </MouseImageTrail>
     );
-
-    // return (
-    //     <MouseImageTrail
-    //         renderImageBuffer={100}
-    //         rotationRange={25}
-    //         images={[
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/tytzjjmunwol1ezslfuv.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/y3v15i89lmhhtmzieqlw.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/zszsz5cvb2kjitikiq4m.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/xdhvexcluekctrclkrqc.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/wshk1nj4irtrsinw3k44.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/l4asm905wlcf5jdmvjx5.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/fbwuybvzleyvrbijywyk.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/kg03rx5end96ckwryvho.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/h9ehr82flegoyc1lw6wx.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/ge2hbnhesjdb0cjsyczy.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/r2u4p4bcioqc4sf5xfg5.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/rohoqsm9xwydqlkz4puy.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/ikmgrfubdpvgbcfrpz5i.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/qjzrqy6hbu3orbno0lsl.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/i7tmohwnomihygjyppxa.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/a7uc2kgaf8iapkaophil.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/aoxilzijxqrcwmy8eyb6.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/znhsffd4xauvdjtiaayc.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/dlff77jcgsekkriohmyp.png',
-    //             'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/yznhz7xo0dzfrysrh25w.png'
-    //         ]}
-    //     // images={[
-    //     //     images.pic1,
-    //     //     images.pic2,
-    //     //     images.pic3,
-    //     //     images.pic4,
-    //     //     images.pic5,
-    //     //     images.pic6,
-    //     //     images.pic7,
-    //     //     images.pic8,
-    //     //     images.pic9,
-    //     //     images.pic10,
-    //     //     images.pic11,
-    //     //     images.pic12,
-    //     //     images.pic13,
-    //     //     images.pic14,
-    //     //     images.pic15,
-    //     //     images.pic16,
-    //     //     images.pic17,
-    //     //     images.pic18,
-    //     //     images.pic19,
-    //     //     images.pic20,
-    //     // ]}
-    //     >
-    //         <section className="grid h-screen w-full place-content-center bg-white">
-    //             <p className="flex flex-col items-center gap-2 text-3xl font-bold uppercase text-black">
-    //                 <span>Hover your mouse</span>
-    //                 <span className="text-sm font-normal text-center text-gray-600">USE YOUR LAPTOP OR DESKTOP FOR BETTER EXPERIENCE</span>
-    //             </p>
-
-    //         </section>
-    //     </MouseImageTrail>
-    // )
 }
 
 export default AnnivPage
