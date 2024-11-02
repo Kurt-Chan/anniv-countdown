@@ -35,6 +35,8 @@ const CountdownPage = () => {
     const [showLoader, setShowLoader] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
     const [emailSent, setEmailSent] = useState<boolean>(false);
+    const date = new Date();
+    const now = date.toLocaleDateString()
 
     // For email confirmation
     const emailConfirmTemp = `<head>
@@ -198,9 +200,10 @@ const CountdownPage = () => {
             navigate('/');
         }
 
-        const anniv = localStorage.getItem('anniv')
-
-        if (anniv === 'true') {
+        // if (anniv === 'true') {
+        //     navigate('/happy-anniversary')
+        // }
+        if (now === "11/18/2024") {
             navigate('/happy-anniversary')
         }
     }, [navigate]);

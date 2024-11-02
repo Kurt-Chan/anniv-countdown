@@ -150,8 +150,8 @@ const CountdownItem = ({ unit, text }: { unit: Units; text: string }) => {
             // console.log(distance)
             if (distance <= 0) {
                 clearInterval(intervalRef.current || undefined);
-                localStorage.setItem('anniv', 'true')
-                window.location.reload()
+                // localStorage.setItem('anniv', 'true')
+                // window.location.reload()
                 return;
             }
 
