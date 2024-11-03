@@ -1,4 +1,3 @@
-import React from 'react';
 import useAudio from "@/hooks/useAudio";
 import { Slider } from "@/components/ui/slider"
 
@@ -6,24 +5,13 @@ import { Slider } from "@/components/ui/slider"
 const AudioPlayer = ({ src }: any) => {
     // Call the useAudio hook inside the component body
     const {
-        ready,
-        loading,
-        error,
-        playing,
-        paused,
         duration,
-        mute,
-        loop,
         volume,
         seek,
-        rate,
-        onToggle,
         onPlay,
         onPause,
-        onMute,
         onLoop,
         onVolume,
-        onRate,
         onSeek,
     } = useAudio({ src, preload: true, autoplay: true, volume: 0.5, mute: false, loop: true, rate: 1.0 });
 

@@ -9,7 +9,6 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
@@ -22,8 +21,6 @@ const AnnivPage = () => {
     const [imagesLoaded, setImagesLoaded] = useState(false);
     const date = new Date();
     const now = date.toLocaleDateString()
-
-    const bgSound = new Audio('https://res.cloudinary.com/dnhrwakmp/video/upload/v1730598110/anniv/j85itenlgfc2ducla0lj.mp3')
 
     const imageUrls = [
         'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/tytzjjmunwol1ezslfuv.png',
@@ -61,16 +58,8 @@ const AnnivPage = () => {
         );
     };
 
-    const handlePlaySound = () => {
-        bgSound.play()
-    }
-    const handlePauseSound = () => {
-        bgSound.pause()
-    }
-
     useEffect(() => {
         console.log(now)
-        bgSound.autoplay
 
         if (now != "11/18/2024") { // must change to 11/18/2024 and change to date today
             navigate('/wait')
