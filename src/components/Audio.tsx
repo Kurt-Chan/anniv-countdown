@@ -4,19 +4,14 @@ import { Slider } from "@/components/ui/slider"
 const AudioPlayer = ({ src }: any) => {
     // Call the useAudio hook inside the component body
     const {
-        ready,
-        loading,
-        error,
         playing,
         paused,
         loop,
         duration,
         volume,
         seek,
-        onToggle,
         onPlay,
         onPause,
-        onMute,
         onLoop,
         onVolume,
         onSeek,
