@@ -82,7 +82,7 @@ const AnnivPage = () => {
 
     return (
         <section className="grid grid-cols-12 divide-x-2 space-x-4">
-            <div className="col-span-8">
+            <div className="col-span-9">
                 <MouseImageTrail
                     renderImageBuffer={60}
                     rotationRange={25}
@@ -102,7 +102,7 @@ const AnnivPage = () => {
                     </section>
                 </MouseImageTrail>
             </div>
-            <div className="col-span-4 p-4 bg-rose-950">
+            <div className="col-span-3 p-4 bg-rose-950">
                 <Card>
                     <CardHeader className="text-center">
                         <CardTitle>Fall</CardTitle>
@@ -112,7 +112,23 @@ const AnnivPage = () => {
                         <AudioPlayer src='https://res.cloudinary.com/dnhrwakmp/video/upload/v1730598110/anniv/j85itenlgfc2ducla0lj.mp3'></AudioPlayer>
                     </CardContent>
                 </Card>
-                <h1 className="text-lg">Love</h1>
+                <div className="text-pretty p-3 h-max flex justify-center items-center text-white">
+                    <div className="grid place-items-center">
+                        <h1 className="text-4xl mb-5 font-[Britney-Variable] text-center">Happy 1st Anniversary, My Love!</h1>
+                        <p className="mb-4 font-body">I may not have a big surprise for you today, but I hope you’ll love this simple website I made for you
+                        </p>
+                        <p className="mb-4 font-body">We've been through ups and downs, and it may be even tougher in the future.
+                            But I pray that we will endure the hardships to come, with God's strength and provision.
+                            May we always seek God in everything we do, together, forever, by His power. <span className="font-bold">I love you!</span>
+                        </p>
+                        <p className="mb-4 font-body">I may not be exactly what you once imagined,
+                            but I promise to be the partner who will always be there for you and meet your needs.
+                        </p>
+                        <p className="font-body">
+                            By the way, this song will always remind me of you.
+                        </p>
+                    </div>
+                </div>
             </div>
         </section>
     );
