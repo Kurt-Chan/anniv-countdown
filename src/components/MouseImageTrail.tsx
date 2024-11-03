@@ -105,7 +105,7 @@ const MouseImageTrail = ({
 
             {images.map((img, index) => (
                 <img
-                    className="pointer-events-none absolute left-0 top-0 h-48 w-auto rounded-xl border-2 border-black bg-neutral-900 object-cover opacity-0"
+                    className="pointer-events-none absolute left-0 top-0 h-48 w-auto rounded-lg border-2 px-2 pt-2 pb-7 border-black shadow-lg bg-neutral-100 object-cover opacity-0"
                     src={img}
                     alt={`Mouse move image ${index}`}
                     key={index}

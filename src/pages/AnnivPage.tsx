@@ -42,7 +42,15 @@ const AnnivPage = () => {
         'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/aoxilzijxqrcwmy8eyb6.jpg',
         'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/znhsffd4xauvdjtiaayc.jpg',
         'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/dlff77jcgsekkriohmyp.jpg',
-        'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/yznhz7xo0dzfrysrh25w.jpg'
+        'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/yznhz7xo0dzfrysrh25w.jpg',
+        'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730605439/anniv/fjjr4jcgglsltilvq9fg.jpg',
+        'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730605439/anniv/r60sgqjw7x9tg0jgmh1c.jpg',
+        'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730605439/anniv/cj5l1quukwfaminfibjo.jpg',
+        'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730605439/anniv/exquzjklxltmsg3fotzl.jpg',
+        'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730605440/anniv/dkipr9l4bbhvjx6dz5ao.jpg',
+        'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730605440/anniv/iznikpe1nobkrbfg3kg3.jpg',
+        'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730605439/anniv/zs7eqrnvrmtzjywpihnr.jpg',
+        'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730605439/anniv/xhybytsfgdolxeiypucv.jpg'
     ]
 
     const preloadImages = (urls: any) => {

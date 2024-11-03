@@ -1,7 +1,5 @@
 import useAudio from "@/hooks/useAudio";
 import { Slider } from "@/components/ui/slider"
-import { format } from "path";
-
 
 const AudioPlayer = ({ src }: any) => {
     // Call the useAudio hook inside the component body
