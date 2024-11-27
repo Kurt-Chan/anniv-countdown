@@ -17,10 +17,7 @@ import {
 
 
 const AnnivPage = () => {
-    const navigate = useNavigate()
     const [imagesLoaded, setImagesLoaded] = useState(false);
-    const date = new Date();
-    const now = date.toLocaleDateString()
 
     const imageUrls = [
         'https://res.cloudinary.com/dnhrwakmp/image/upload/v1730513507/anniv/tytzjjmunwol1ezslfuv.png',
@@ -67,16 +64,14 @@ const AnnivPage = () => {
     };
 
     useEffect(() => {
-        console.log(now)
-
-        if (now != "11/18/2024") { // must change to 11/18/2024 and change to date today
-            navigate('/wait')
-        }
-        else {
-            preloadImages(imageUrls)
-                .then(() => setImagesLoaded(true))
-                .catch((error) => console.error("Error preloading images:", error));
-        }
+        // if (now != "11/18/2024") { // must change to 11/18/2024 and change to date today
+        //     navigate('/wait')
+        // }
+        // else {
+        preloadImages(imageUrls)
+            .then(() => setImagesLoaded(true))
+            .catch((error) => console.error("Error preloading images:", error));
+        // }
     }, []);
 
     if (!imagesLoaded) {
