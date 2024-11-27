@@ -3,7 +3,7 @@ import MouseImageTrail from "@/components/MouseImageTrail";
 // import { useEffect } from "react"
 // import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { HeartSpinner } from "react-spinners-kit";
 import {
     Card,
